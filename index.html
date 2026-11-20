@@ -11,7 +11,12 @@
 <body>
   <header class="topbar">
     <a class="brand" href="#" aria-label="Memo 홈"><span class="brand-mark">M</span><span>MEMO</span></a>
-    <span class="local-indicator"><span class="status-dot"></span> 이 기기에 저장 중</span>
+    <div class="topbar-actions">
+      <span class="local-indicator"><span class="status-dot"></span> 이 기기에 저장 중</span>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="다크 모드로 전환" title="다크 모드로 전환">
+        <span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">다크 모드</span>
+      </button>
+    </div>
   </header>
 
   <main class="layout">

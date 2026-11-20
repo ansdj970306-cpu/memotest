@@ -2,6 +2,33 @@
   'use strict';
 
   const STORAGE_KEY = 'memo-app-notes-v1';
+  const THEME_KEY = 'memo-app-theme-v1';
+  const themeToggle = document.querySelector('#theme-toggle');
+
+  function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+    themeToggle.setAttribute('aria-label', isDark ? '라이트 모드로 전환' : '다크 모드로 전환');
+    themeToggle.title = isDark ? '라이트 모드로 전환' : '다크 모드로 전환';
+    themeToggle.querySelector('.theme-icon').textContent = isDark ? '☀' : '☾';
+    themeToggle.querySelector('.theme-label').textContent = isDark ? '라이트 모드' : '다크 모드';
+    document.querySelector('meta[name="theme-color"]').content = isDark ? '#17181b' : '#ffffff';
+  }
+
+  let savedTheme = 'light';
+  try {
+    savedTheme = localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light';
+  } catch (error) {
+    console.warn('테마 설정을 불러오지 못했습니다.', error);
+  }
+  applyTheme(savedTheme);
+  themeToggle.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
+    try { localStorage.setItem(THEME_KEY, nextTheme); }
+    catch (error) { console.warn('테마 설정을 저장하지 못했습니다.', error); }
+  });
+
   const SUPABASE = {
     url: 'https://dgzxqcfzbadhdxlcjdbe.supabase.co',
     publishableKey: 'sb_publishable_kPGRMx6lQe0GvCwjcgKkZw_ktMgZyOq',
